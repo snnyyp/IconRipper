@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" data-name="图层 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 513 513">
+  <path d="M449.135,506.5H62.397c-10.664,0-19.624-7.858-20.81-18.25L6.632,272.03c-1.389-12.169,8.323-22.818,20.81-22.818h458.114c12.487,0,22.199,10.649,20.811,22.818l-36.423,216.219c-1.186,10.392-10.147,18.25-20.81,18.25Z" style="fill: none; stroke: gray; stroke-miterlimit: 10; stroke-width: 13px;"/>
+  <g>
+    <line x1="217.221" y1="394.727" x2="295.779" y2="394.727" style="fill: none; stroke: gray; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 13px;"/>
+    <line x1="256.5" y1="356.21" x2="256.5" y2="433.244" style="fill: none; stroke: gray; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 13px;"/>
+  </g>
+  <polyline points="82.058 249.212 82.058 6.5 378.047 6.5 431.213 58.635 431.213 249.212" style="fill: none; stroke: gray; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 13px;"/>
+  <g>
+    <polyline points="256.635 48.377 256.635 180.393 208.527 133.217" style="fill: none; stroke: gray; stroke-linecap: round; stroke-linejoin: round; stroke-width: 13px;"/>
+    <polyline points="256.5 48.377 256.5 180.393 304.608 133.217" style="fill: none; stroke: gray; stroke-linecap: round; stroke-linejoin: round; stroke-width: 13px;"/>
+  </g>
+  <path d="M42.721,249.212h-1.278V119.466c0-15.07,12.458-27.287,27.827-27.287h12.788" style="fill: none; stroke: gray; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 13px;"/>
+  <path d="M470.549,249.212h1.278v-100.268c0-11.646-12.458-21.088-27.827-21.088h-12.788" style="fill: none; stroke: gray; stroke-linecap: round; stroke-miterlimit: 10; stroke-width: 13px;"/>
+  <polyline points="431.213 58.828 379.44 58.828 379.44 6.5" style="fill: none; stroke: gray; stroke-miterlimit: 10; stroke-width: 13px;"/>
+</svg>

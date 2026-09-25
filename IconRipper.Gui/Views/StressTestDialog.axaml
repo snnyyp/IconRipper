@@ -1,0 +1,23 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="IconRipper.Gui.Views.StressTestDialog"
+
+        CanResize="False"
+        Title="Load / Unload Stress Test"
+        WindowStartupLocation="CenterScreen"
+        Icon="/Assets/icon.ico">
+
+    <Grid Margin="15" VerticalAlignment="Center" RowDefinitions="Auto,Auto,Auto">
+        <TextBlock Grid.Row="0" Margin="0 0 0 8" TextWrapping="Wrap" Text="Count:" />
+        <NumericUpDown Grid.Row="1" x:Name="NumericInput" ParsingNumberStyle="Integer" Increment="1" FormatString="0"
+                       Value="0" Minimum="0" Maximum="1000000" ClipValueToMinMax="True" />
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="OK" Width="75" IsDefault="True" Margin="0 0 30 0" Click="OkButton_OnClick" />
+            <Button Content="Cancel" Width="75" IsCancel="True" Click="CancelButton_OnClick" />
+        </StackPanel>
+    </Grid>
+</Window>

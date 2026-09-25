@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="IconRipper.Gui.Views.AboutDialog"
+        xmlns:l="clr-namespace:RentADeveloper.ResXLocalization.Avalonia;assembly=ResXLocalization.Avalonia"
+        xmlns:loc="clr-namespace:IconRipper.Gui.Localization"
+        Title="{l:Localize {x:Static loc:AboutDialogKeys.WindowTitle}}"
+        CanResize="False"
+        WindowStartupLocation="CenterScreen"
+        Icon="/Assets/icon.ico">
+    <StackPanel Margin="25" VerticalAlignment="Center">
+        <Image Width="100" Source="/Assets/icon.png" />
+
+        <TextBlock Margin="0 20 0 0" Text="{l:Localize {x:Static loc:AboutDialogKeys.Description}}" />
+        <TextBlock>
+            <TextBlock Text="{l:Localize {x:Static loc:AboutDialogKeys.Description_CurrentVersion}}" />
+            <TextBlock Text="{DynamicResource ProductVersion}" />
+        </TextBlock>
+        <TextBlock>
+            <TextBlock Text="{l:Localize {x:Static loc:AboutDialogKeys.Description_GitHubRepo}}" />
+            <HyperlinkButton Content="{Binding $self.NavigateUri}" NavigateUri="https://github.com/snnyyp/IconRipper" Padding="0">
+                <HyperlinkButton.Styles>
+                    <Style Selector="HyperlinkButton /template/ ContentPresenter">
+                        <Setter Property="Foreground" Value="RoyalBlue" />
+                    </Style>
+                    <Style Selector="HyperlinkButton:pointerover /template/ ContentPresenter">
+                        <Setter Property="Foreground" Value="RoyalBlue" />
+                    </Style>
+                </HyperlinkButton.Styles>
+            </HyperlinkButton>
+        </TextBlock>
+    </StackPanel>
+</Window>

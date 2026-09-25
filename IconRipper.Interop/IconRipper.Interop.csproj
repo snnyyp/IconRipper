@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0-windows</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <Version>1.0.0</Version>
+        <AssemblyVersion></AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
+        <PackageProjectUrl>https://github.com/snnyyp/IconRipper</PackageProjectUrl>
+        <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl>
+        <Authors>snnyyp</Authors>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Update="Kernel32.Consts.cs">
+        <DependentUpon>Kernel32.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Kernel32.Defs.cs">
+        <DependentUpon>Kernel32.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Kernel32.Delegates.cs">
+        <DependentUpon>Kernel32.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Kernel32.Enums.cs">
+        <DependentUpon>Kernel32.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Kernel32.Structs.cs">
+        <DependentUpon>Kernel32.cs</DependentUpon>
+      </Compile>
+      <Compile Update="User32.Consts.cs">
+        <DependentUpon>User32.cs</DependentUpon>
+      </Compile>
+      <Compile Update="User32.Defs.cs">
+        <DependentUpon>User32.cs</DependentUpon>
+      </Compile>
+      <Compile Update="User32.Enums.cs">
+        <DependentUpon>User32.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Shell32.Coms.cs">
+        <DependentUpon>Shell32.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Shell32.Consts.cs">
+        <DependentUpon>Shell32.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Shell32.Enums.cs">
+        <DependentUpon>Shell32.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Ole32.Defs.cs">
+        <DependentUpon>Ole32.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>

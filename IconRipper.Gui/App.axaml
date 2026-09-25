@@ -1,0 +1,78 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:cc="using:IconRipper.Gui.CustomControls"
+             x:Class="IconRipper.Gui.App"
+             xmlns:local="using:IconRipper.Gui"
+             RequestedThemeVariant="Light">
+
+    <Application.DataTemplates>
+        <local:ViewLocator />
+    </Application.DataTemplates>
+
+    <Application.Resources>
+        <SolidColorBrush x:Key="StatusBarGradientBrush" Color="#BCBCBC" />
+        <!-- <LinearGradientBrush x:Key="StatusBarGradientBrush" StartPoint="0%,0%" EndPoint="100%,0%"> -->
+        <!--     <GradientStop Color="#BCBCBC" Offset="0.2" /> -->
+        <!--     <GradientStop Color="White" Offset="0.5" /> -->
+        <!--     <GradientStop Color="#BCBCBC" Offset="0.8" /> -->
+        <!-- </LinearGradientBrush> -->
+    </Application.Resources>
+
+    <Application.Styles>
+        <FluentTheme />
+
+        <Style Selector="TextBlock">
+            <!-- <Setter Property="FontSize" Value="20" /> -->
+        </Style>
+
+        <!-- ===================== -->
+        <!-- | RadioToggleButton | -->
+        <!-- ===================== -->
+
+        <StyleInclude Source="/CustomControls/RadioToggleButton.axaml" />
+
+        <Style Selector="cc|RadioToggleButton /template/ ToggleButton">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="CornerRadius" Value="0" />
+        </Style>
+
+        <Style Selector="cc|RadioToggleButton /template/ ToggleButton:pressed">
+            <Setter Property="RenderTransform" Value="none" />
+        </Style>
+
+        <Style Selector="cc|RadioToggleButton:pointerover /template/ ToggleButton ContentPresenter">
+            <Setter Property="Background" Value="#BCBCBC" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+
+        <Style Selector="cc|RadioToggleButton:checked /template/ ToggleButton ContentPresenter">
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Background" Duration="0:0:0.1" />
+                </Transitions>
+            </Setter>
+
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Background" Value="#A1A1A1" />
+        </Style>
+
+        <!-- ============== -->
+        <!-- | ListBoxItem | -->
+        <!-- ============== -->
+
+        <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#BCBCBC" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+
+        <Style Selector="ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Background" Duration="0:0:0.1" />
+                </Transitions>
+            </Setter>
+
+            <Setter Property="Background" Value="#A1A1A1" />
+        </Style>
+    </Application.Styles>
+</Application>

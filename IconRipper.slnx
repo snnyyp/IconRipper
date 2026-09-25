@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="AvaloniaApplication1/AvaloniaApplication1.csproj" />
+  <Project Path="ConsoleApp1/ConsoleApp1.csproj" />
+  <Project Path="IconRipper.Gui/IconRipper.Gui.csproj" />
+  <Project Path="IconRipper.Interop/IconRipper.Interop.csproj" />
+</Solution>

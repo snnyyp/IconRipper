@@ -1,0 +1,424 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+
+        mc:Ignorable="d"
+        d:DesignWidth="960" d:DesignHeight="540"
+
+        xmlns:l="clr-namespace:RentADeveloper.ResXLocalization.Avalonia;assembly=ResXLocalization.Avalonia"
+        xmlns:loc="clr-namespace:IconRipper.Gui.Localization"
+
+        xmlns:vm="using:IconRipper.Gui.ViewModels"
+        xmlns:b="clr-namespace:IconRipper.Gui.Behaviors"
+        xmlns:cc="using:IconRipper.Gui.CustomControls"
+
+        x:Class="IconRipper.Gui.Views.MainWindow"
+        Icon="/Assets/icon.ico"
+        WindowStartupLocation="CenterScreen"
+
+        x:DataType="vm:MainWindowViewModel"
+        Classes.IsModuleNull="{Binding Module, Converter={x:Static ObjectConverters.IsNull}}">
+
+    <Window.Styles>
+        <Style Selector="Window">
+            <Setter Property="Title">
+                <MultiBinding StringFormat="IconRipper [{0}]">
+                    <Binding Path="Module?.LibPath" />
+                </MultiBinding>
+            </Setter>
+        </Style>
+
+        <Style Selector="Window.IsModuleNull">
+            <Setter Property="Title" Value="IconRipper" />
+        </Style>
+    </Window.Styles>
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="{l:Localize {x:Static loc:MainWindowKeys.Menu_File}}">
+                <MenuItem Header="{l:Localize {x:Static loc:MainWindowKeys.Menu_File_Load}}" Command="{Binding LoadCommand}" />
+                <MenuItem Header="{l:Localize {x:Static loc:MainWindowKeys.Menu_File_LoadCommon}}" ItemsSource="{Binding PresetDlls}">
+                    <MenuItem.ItemContainerTheme>
+                        <ControlTheme TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                            <Setter Property="Command" Value="{Binding $parent[Menu].((vm:MainWindowViewModel)DataContext)?.LoadPresetCommand}" />
+                            <Setter Property="CommandParameter" Value="{Binding}" />
+                        </ControlTheme>
+                    </MenuItem.ItemContainerTheme>
+                </MenuItem>
+                <MenuItem Header="{l:Localize {x:Static loc:MainWindowKeys.Menu_File_Unload}}" Command="{Binding UnloadCommand}">
+                    <MenuItem.Styles>
+                        <Style Selector="MenuItem">
+                            <Setter Property="IsEnabled"
+                                    Value="{Binding IconGroup, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                        </Style>
+                    </MenuItem.Styles>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="{l:Localize {x:Static loc:MainWindowKeys.Menu_File_Exit}}" Command="{Binding ExitProgramCommand}" />
+            </MenuItem>
+            <MenuItem Header="{l:Localize {x:Static loc:MainWindowKeys.Menu_Language}}">
+                <MenuItem Header="English"
+                          ToggleType="Radio"
+                          Command="{Binding ChangeLanguageCommand}" CommandParameter="en"
+                          IsChecked="{Binding SelectedLanguage, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=en}" />
+                <MenuItem Header="中文（简体）"
+                          ToggleType="Radio"
+                          Command="{Binding ChangeLanguageCommand}" CommandParameter="zh-Hans"
+                          IsChecked="{Binding SelectedLanguage, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=zh-Hans}" />
+                <MenuItem Header="中文（繁體）"
+                          ToggleType="Radio"
+                          Command="{Binding ChangeLanguageCommand}" CommandParameter="zh-Hant"
+                          IsChecked="{Binding SelectedLanguage, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=zh-Hant}" />
+            </MenuItem>
+            <MenuItem Header="{l:Localize {x:Static loc:MainWindowKeys.Menu_About}}"
+                      Command="{Binding AboutCommand}" />
+        </Menu>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*" MinWidth="330" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="4*" MinWidth="400" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" RowDefinitions="*,Auto">
+                <Grid Grid.Row="0"
+                      RenderOptions.RequiresFullOpacityHandling="True"
+                      Background="Transparent"
+                      IsVisible="{Binding IconGroup, Converter={x:Static ObjectConverters.IsNull}}">
+                    <Interaction.Behaviors>
+                        <b:SingleFileDropBehavior AlwaysAddClass="True" Command="{Binding OnFileDroppedCommand}" />
+                    </Interaction.Behaviors>
+
+                    <Grid.Styles>
+                        <Style Selector="Grid > TextBlock">
+                            <Setter Property="Opacity" Value="1.0" />
+                        </Style>
+                        <Style Selector="Grid.dragging-over > TextBlock">
+                            <Setter Property="Opacity" Value="0.4" />
+                        </Style>
+                        <Style Selector="Grid > Border">
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="Opacity" Value="0.0" />
+                        </Style>
+                        <Style Selector="Grid.dragging-over > Border">
+                            <Setter Property="BorderThickness" Value="5" />
+                            <Setter Property="Opacity" Value="1.0" />
+                        </Style>
+                    </Grid.Styles>
+
+                    <Border BorderBrush="Gray" IsHitTestVisible="False">
+                        <Border.Transitions>
+                            <Transitions>
+                                <ThicknessTransition Property="BorderThickness" Duration="0:0:0.2" />
+                                <DoubleTransition Property="Opacity" Duration="0:0:0.2" />
+                            </Transitions>
+                        </Border.Transitions>
+
+                        <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*,*">
+                            <Svg Grid.Row="1" Grid.Column="1" Path="/Assets/drag_n_drop.svg" Stretch="Uniform" EnableCache="True" />
+                        </Grid>
+                    </Border>
+
+                    <TextBlock TextAlignment="Center" IsHitTestVisible="False"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Text="{l:Localize {x:Static loc:MainWindowKeys.IconGroup_Unloaded}}" />
+                </Grid>
+
+                <ScrollViewer Grid.Row="0"
+                              AllowAutoHide="False"
+                              HorizontalScrollBarVisibility="Disabled"
+                              IsVisible="{Binding IconGroup, Converter={x:Static ObjectConverters.IsNotNull}}">
+                    <ItemsRepeater ItemsSource="{Binding IconGroup?.IconGroupInfos}">
+                        <Interaction.Behaviors>
+                            <b:ItemsRepeaterIReloadableBehavior />
+                            <b:ItemsRepeaterResetScrollBehavior BasedOn="{Binding IconGroup}" />
+                            <b:ItemsRepeaterSelectedItemBehavior SelectedItem="{Binding SelectedIconGroup}" />
+                        </Interaction.Behaviors>
+
+                        <ItemsRepeater.Layout>
+                            <UniformGridLayout MinItemWidth="100" MinItemHeight="140" />
+                        </ItemsRepeater.Layout>
+
+                        <ItemsRepeater.ItemTemplate>
+                            <DataTemplate>
+                                <cc:RadioToggleButton>
+                                    <StackPanel VerticalAlignment="Center">
+                                        <Image Source="{Binding Thumbnail}" Stretch="Uniform" />
+                                        <TextBlock Text="{Binding GroupName}" TextAlignment="Center" Margin="0 10 0 0" />
+
+                                        <StackPanel.ContextMenu>
+                                            <ContextMenu DataContext="{Binding $parent[Window].DataContext}" x:DataType="vm:MainWindowViewModel">
+                                                <MenuItem Header="{l:Localize {x:Static loc:MainWindowKeys.IconGroup_ContextMenu_SaveIconGroup}}" IsHitTestVisible="False" FontWeight="Bold" />
+                                                <Separator />
+                                                <MenuItem Header="{l:Localize {x:Static loc:MainWindowKeys.IconGroup_ContextMenu_SaveAsIco}}" Command="{Binding SaveIconGroupCommand}"
+                                                          CommandParameter="ico" />
+                                            </ContextMenu>
+                                        </StackPanel.ContextMenu>
+                                    </StackPanel>
+                                </cc:RadioToggleButton>
+                            </DataTemplate>
+                        </ItemsRepeater.ItemTemplate>
+                    </ItemsRepeater>
+                </ScrollViewer>
+
+                <!-- <ListBox Grid.Row="0" -->
+                <!--          BorderThickness="0" -->
+                <!--          ScrollViewer.HorizontalScrollBarVisibility="Disabled" -->
+                <!--          IsVisible="{Binding IconGroup, Converter={x:Static ObjectConverters.IsNotNull}}" -->
+                <!--          SelectionMode="Toggle" -->
+                <!--          ItemsSource="{Binding IconGroup.IconGroupInfos}" -->
+                <!--          SelectedItem="{Binding SelectedIconGroup}"> -->
+                <!--     <Interaction.Behaviors> -->
+                <!--         <b:ListBoxScrollToHomeOnItemsSourceUpdatedBehavior /> -->
+                <!--     </Interaction.Behaviors> -->
+                <!-- -->
+                <!--     <ListBox.ItemsPanel> -->
+                <!--         <ItemsPanelTemplate> -->
+                <!--             <WrapPanel ItemWidth="100" ItemHeight="140" /> -->
+                <!--         </ItemsPanelTemplate> -->
+                <!--     </ListBox.ItemsPanel> -->
+                <!-- -->
+                <!--     <ListBox.ItemTemplate> -->
+                <!--         <DataTemplate> -->
+                <!--             <StackPanel VerticalAlignment="Center"> -->
+                <!--                 <Image Source="{Binding Thumbnail}" Stretch="Uniform" /> -->
+                <!--                 <TextBlock Text="{Binding GroupName}" TextAlignment="Center" Margin="0 10 0 0" /> -->
+                <!-- -->
+                <!--                 <StackPanel.ContextMenu> -->
+                <!--                     <ContextMenu DataContext="{Binding $parent[Window].DataContext}" x:DataType="vm:MainWindowViewModel"> -->
+                <!--                         <MenuItem Header="{l:Localize {x:Static loc:MainWindowKeys.IconGroup_ContextMenu_SaveIconGroup}}" IsHitTestVisible="False" FontWeight="Bold" /> -->
+                <!--                         <Separator /> -->
+                <!--                         <MenuItem Header="{l:Localize {x:Static loc:MainWindowKeys.IconGroup_ContextMenu_SaveAsIco}}" Command="{Binding SaveIconGroupCommand}" CommandParameter="ico" /> -->
+                <!--                     </ContextMenu> -->
+                <!--                 </StackPanel.ContextMenu> -->
+                <!--             </StackPanel> -->
+                <!--         </DataTemplate> -->
+                <!--     </ListBox.ItemTemplate> -->
+                <!-- </ListBox> -->
+
+                <TextBlock Grid.Row="1"
+                           Background="{StaticResource StatusBarGradientBrush}"
+                           Padding="5,2,0,0"
+                           IsVisible="{Binding IconGroup, Converter={x:Static ObjectConverters.IsNull}}"
+                           Text="{l:Localize {x:Static loc:MainWindowKeys.IconGroup_StatusBar_Unloaded}}" />
+
+                <TextBlock Grid.Row="1"
+                           Background="{StaticResource StatusBarGradientBrush}"
+                           Padding="5,2,0,0"
+                           IsVisible="{Binding IconGroup, Converter={x:Static ObjectConverters.IsNotNull}}"
+                           Text="{l:Localize {x:Static loc:MainWindowKeys.IconGroup_StatusBar_Loaded}}"
+                           l:LocalizeArgs.Arg0="{Binding IconGroup?.IconGroupInfos.Count}" />
+            </Grid>
+
+            <GridSplitter Grid.Column="1"
+                          HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                          Background="Gray"
+                          MinWidth="{Binding $self.Width}" Width="4" />
+
+            <Grid Grid.Column="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition MaxHeight="340" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0"
+                               IsVisible="{Binding Icon, Converter={x:Static ObjectConverters.IsNull}}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Text="{l:Localize {x:Static loc:MainWindowKeys.Icon_Unselected}}" />
+
+                    <Grid Grid.Row="0"
+                          Margin="5,0,0,0"
+                          IsVisible="{Binding SelectedIconGroup, Converter={x:Static ObjectConverters.IsNotNull}}">
+                        <ScrollViewer AllowAutoHide="False"
+                                      HorizontalScrollBarVisibility="Disabled"
+                                      IsVisible="{Binding IconGroup, Converter={x:Static ObjectConverters.IsNotNull}}">
+                            <ItemsRepeater ItemsSource="{Binding Icon?.IconInfos}">
+                                <Interaction.Behaviors>
+                                    <b:ItemsRepeaterIReloadableBehavior />
+                                    <b:ItemsRepeaterResetScrollBehavior BasedOn="{Binding Icon}" />
+                                    <b:ItemsRepeaterSelectedItemBehavior SelectedItem="{Binding SelectedIcon}" />
+                                </Interaction.Behaviors>
+
+                                <ItemsRepeater.Layout>
+                                    <UniformGridLayout MinItemWidth="80" MinItemHeight="100" />
+                                </ItemsRepeater.Layout>
+
+                                <ItemsRepeater.ItemTemplate>
+                                    <DataTemplate>
+                                        <cc:RadioToggleButton>
+                                            <StackPanel Orientation="Vertical">
+                                                <Image Source="{Binding Icon}" Stretch="Uniform" />
+                                                <TextBlock Text="{Binding RtIcon}" TextAlignment="Center" Margin="0 5 0 0" />
+
+                                                <StackPanel.ContextMenu>
+                                                    <ContextMenu DataContext="{Binding $parent[Window].DataContext}" x:DataType="vm:MainWindowViewModel">
+                                                        <MenuItem Header="{l:Localize {x:Static loc:MainWindowKeys.Icon_ContextMenu_SaveIcon}}" IsHitTestVisible="False" FontWeight="Bold" />
+                                                        <Separator />
+                                                        <MenuItem Header="{l:Localize {x:Static loc:MainWindowKeys.Icon_ContextMenu_SaveAsPng}}" Command="{Binding SaveIconCommand}"
+                                                                  CommandParameter="png" />
+                                                        <MenuItem Header="{l:Localize {x:Static loc:MainWindowKeys.Icon_ContextMenu_SaveAsJpg}}" Command="{Binding SaveIconCommand}"
+                                                                  CommandParameter="jpg" />
+                                                        <MenuItem Header="{l:Localize {x:Static loc:MainWindowKeys.Icon_ContextMenu_SaveAsWebP}}" Command="{Binding SaveIconCommand}"
+                                                                  CommandParameter="webp" />
+                                                        <MenuItem Header="{l:Localize {x:Static loc:MainWindowKeys.Icon_ContextMenu_SaveAsIco}}" Command="{Binding SaveIconCommand}"
+                                                                  CommandParameter="ico" />
+                                                        <Separator />
+                                                        <MenuItem Header="{l:Localize {x:Static loc:MainWindowKeys.Icon_ContextMenu_CopyToClipboard}}" Command="{Binding CopyToClipboardCommand}" />
+                                                    </ContextMenu>
+                                                </StackPanel.ContextMenu>
+                                            </StackPanel>
+                                        </cc:RadioToggleButton>
+                                    </DataTemplate>
+                                </ItemsRepeater.ItemTemplate>
+                            </ItemsRepeater>
+                        </ScrollViewer>
+
+                        <!-- <ListBox SelectionMode="Toggle" -->
+                        <!--          ScrollViewer.HorizontalScrollBarVisibility="Disabled" -->
+                        <!--          BorderThickness="0" -->
+                        <!--          ItemsSource="{Binding Icon.IconInfos}" -->
+                        <!--          SelectedItem="{Binding SelectedIcon}"> -->
+                        <!--     <Interaction.Behaviors> -->
+                        <!--         <b:ListBoxScrollToHomeOnItemsSourceUpdatedBehavior /> -->
+                        <!--     </Interaction.Behaviors> -->
+                        <!-- -->
+                        <!--     <ListBox.ItemsPanel> -->
+                        <!--         <ItemsPanelTemplate> -->
+                        <!--             <WrapPanel ItemWidth="80" ItemHeight="100" /> -->
+                        <!--         </ItemsPanelTemplate> -->
+                        <!--     </ListBox.ItemsPanel> -->
+                        <!-- -->
+                        <!--     <ListBox.ItemTemplate> -->
+                        <!--         <DataTemplate> -->
+                        <!-- -->
+                        <!--         </DataTemplate> -->
+                        <!--     </ListBox.ItemTemplate> -->
+                        <!-- </ListBox> -->
+
+                        <Button HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                Width="35" Height="35"
+                                Background="Transparent" BorderThickness="0"
+                                Command="{Binding ToggleIconSortCriteriaCommand}">
+                            <Button.Styles>
+                                <Style Selector="Button > Grid Svg">
+                                    <Setter Property="Opacity" Value="0.5" />
+                                    <Setter Property="Transitions">
+                                        <Transitions>
+                                            <DoubleTransition Property="Opacity" Duration="0:0:0.1" />
+                                        </Transitions>
+                                    </Setter>
+                                </Style>
+                                <Style Selector="Button:pointerover">
+                                    <Setter Property="Cursor" Value="Hand" />
+
+                                    <Style Selector="^ > Grid Svg">
+                                        <Setter Property="Opacity" Value="1.0" />
+                                    </Style>
+                                </Style>
+                            </Button.Styles>
+
+                            <ToolTip.Tip>
+                                <Grid>
+                                    <TextBlock Text="{l:Localize {x:Static loc:MainWindowKeys.Icon_ReSortButton_Tooltip_Id}}"
+                                               IsVisible="{Binding SortCriteria, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static vm:SortCriteria.ID}}" />
+                                    <TextBlock Text="{l:Localize {x:Static loc:MainWindowKeys.Icon_ReSortButton_Tooltip_ImageQuality}}"
+                                               IsVisible="{Binding SortCriteria, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static vm:SortCriteria.IMAGE_QUALITY}}" />
+                                </Grid>
+                            </ToolTip.Tip>
+
+                            <Grid RenderOptions.RequiresFullOpacityHandling="True">
+                                <Svg Path="/Assets/sort_by_id.svg" Stretch="Uniform" EnableCache="True"
+                                     IsVisible="{Binding SortCriteria, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static vm:SortCriteria.ID}}" />
+                                <Svg Path="/Assets/sort_by_image_quality.svg" Stretch="Uniform" EnableCache="True"
+                                     IsVisible="{Binding SortCriteria, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static vm:SortCriteria.IMAGE_QUALITY}}" />
+                            </Grid>
+                        </Button>
+                    </Grid>
+
+                    <Separator Grid.Row="1"
+                               Margin="0,5,0,0"
+                               HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                               Background="Gray"
+                               MinHeight="{Binding $self.Height}" Height="4" />
+
+                    <TextBlock Grid.Row="2"
+                               IsVisible="{Binding SelectedIcon, Converter={x:Static ObjectConverters.IsNull}}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" Text="{l:Localize {x:Static loc:MainWindowKeys.Icon_Info_Unselected}}" />
+
+                    <Grid Grid.Row="2"
+                          RowDefinitions="30,*"
+                          IsVisible="{Binding SelectedIcon, Converter={x:Static ObjectConverters.IsNotNull}}">
+                        <TextBlock Grid.Row="0"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   Text="{l:Localize {x:Static loc:MainWindowKeys.Icon_Info_Title}}" />
+
+                        <ListBox Grid.Row="1"
+                                 ScrollViewer.AllowAutoHide="False"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 SelectionMode="Toggle">
+                            <Interaction.Behaviors>
+                                <b:ListBoxResetScrollBehavior BasedOn="{Binding SelectedIcon}" />
+                                <b:ListBoxResetSelectionBehavior BasedOn="{Binding SelectedIcon}" />
+                            </Interaction.Behaviors>
+
+                            <ListBoxItem>
+                                <cc:IconInfoRow LeftColText="RT_GROUP_ICON" RightColText="{Binding SelectedIcon?.RtGroupIcon}" />
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <cc:IconInfoRow LeftColText="RT_ICON" RightColText="{Binding SelectedIcon?.RtIcon}" />
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <cc:IconInfoRow LeftColText="{l:Localize {x:Static loc:MainWindowKeys.Icon_Info_Format}}"
+                                                RightColText="{Binding SelectedIcon?.Format}" />
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <cc:IconInfoRow LeftColText="{l:Localize {x:Static loc:MainWindowKeys.Icon_Info_Width}}"
+                                                RightColText="{Binding SelectedIcon?.Width}" />
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <cc:IconInfoRow LeftColText="{l:Localize {x:Static loc:MainWindowKeys.Icon_Info_Height}}"
+                                                RightColText="{Binding SelectedIcon?.Height}" />
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <cc:IconInfoRow LeftColText="{l:Localize {x:Static loc:MainWindowKeys.Icon_Info_NumberOfColors}}"
+                                                RightColText="{Binding SelectedIcon?.NumberOfColors}" />
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <cc:IconInfoRow LeftColText="{l:Localize {x:Static loc:MainWindowKeys.Icon_Info_Planes}}"
+                                                RightColText="{Binding SelectedIcon?.Planes}" />
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <cc:IconInfoRow LeftColText="{l:Localize {x:Static loc:MainWindowKeys.Icon_Info_BitsPerPixel}}"
+                                                RightColText="{Binding SelectedIcon?.BitsPerPixel}" />
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <cc:IconInfoRow LeftColText="{l:Localize {x:Static loc:MainWindowKeys.Icon_Info_Size}}"
+                                                RightColText="{Binding SelectedIcon?.Size}" />
+                            </ListBoxItem>
+                        </ListBox>
+                    </Grid>
+
+                    <TextBlock Grid.Row="3"
+                               Background="{StaticResource StatusBarGradientBrush}"
+                               Padding="5,2,0,0"
+                               IsVisible="{Binding Icon, Converter={x:Static ObjectConverters.IsNull}}"
+                               Text="{l:Localize {x:Static loc:MainWindowKeys.Icon_StatusBar_Unselected}}" />
+
+                    <TextBlock Grid.Row="3"
+                               Background="{StaticResource StatusBarGradientBrush}"
+                               Padding="5,2,0,0"
+                               IsVisible="{Binding Icon, Converter={x:Static ObjectConverters.IsNotNull}}"
+                               Text="{l:Localize {x:Static loc:MainWindowKeys.Icon_StatusBar_Selected}}"
+                               l:LocalizeArgs.Arg0="{Binding Icon?.IconInfos.Count}" />
+                </Grid>
+            </Grid>
+        </Grid>
+    </DockPanel>
+
+</Window>

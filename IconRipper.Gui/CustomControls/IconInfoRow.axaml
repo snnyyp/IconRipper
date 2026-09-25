@@ -1,0 +1,16 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:uc="clr-namespace:IconRipper.Gui.CustomControls"
+             mc:Ignorable="d"
+             d:DesignWidth="300" d:DesignHeight="30"
+             x:Class="IconRipper.Gui.CustomControls.IconInfoRow">
+    <Grid Height="30" ColumnDefinitions="*,Auto,*">
+        <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Text="{Binding $parent[uc:IconInfoRow].LeftColText}" />
+        <Separator Grid.Column="1" />
+        <TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Text="{Binding $parent[uc:IconInfoRow].RightColText}" />
+    </Grid>
+</UserControl>

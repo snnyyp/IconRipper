@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <data name="Menu.File" xml:space="preserve">
+        <value>File</value>
+    </data>
+    <data name="Menu.About" xml:space="preserve">
+        <value>About</value>
+    </data>
+    <data name="Menu.File.Load" xml:space="preserve">
+        <value>Load</value>
+    </data>
+    <data name="Menu.File.Unload" xml:space="preserve">
+        <value>Unload</value>
+    </data>
+    <data name="Menu.File.Exit" xml:space="preserve">
+        <value>Exit</value>
+    </data>
+    <data name="Menu.About.ProjectPage" xml:space="preserve">
+        <value>Project Page</value>
+    </data>
+    <data name="Menu.About.Version" xml:space="preserve">
+        <value>Version</value>
+    </data>
+    <data name="IconGroup.ContextMenu.SaveIconGroup" xml:space="preserve">
+        <value>Save this icon group...</value>
+    </data>
+    <data name="IconGroup.ContextMenu.SaveAsIco" xml:space="preserve">
+        <value>...as ICO (all resolutions)</value>
+    </data>
+    <data name="Menu.Language" xml:space="preserve">
+        <value>Language</value>
+    </data>
+    <data name="IconGroup.StatusBar.Unloaded" xml:space="preserve">
+        <value>Waiting for a PE file to load</value>
+    </data>
+    <data name="Menu.File.LoadCommon" xml:space="preserve">
+        <value>Load Common...</value>
+    </data>
+    <data name="IconGroup.Unloaded" xml:space="preserve">
+        <value>Please load a PE file
+Such as Dynamic Link Library (DLL), Executable (EXE), etc
+
+1. Menu -&gt; File -&gt; Load
+2. Menu -&gt; File -&gt; Load Common...
+3. Drag it here
+4. Pass the file path via the command line (eg. IconRipper.Gui.exe shell32.dll)</value>
+    </data>
+    <data name="IconGroup.StatusBar.Loaded" xml:space="preserve">
+        <value>{0} icon groups in total</value>
+    </data>
+    <data name="Icon.StatusBar.Unselected" xml:space="preserve">
+        <value>Waiting for icon group selection</value>
+    </data>
+    <data name="Icon.StatusBar.Selected" xml:space="preserve">
+        <value>{0} icons in total</value>
+    </data>
+    <data name="Icon.Info.Unselected" xml:space="preserve">
+        <value>Please select an icon from above</value>
+    </data>
+    <data name="Icon.Unselected" xml:space="preserve">
+        <value>Please select an icon group from the left</value>
+    </data>
+    <data name="Icon.ContextMenu.SaveIcon" xml:space="preserve">
+        <value>Save this icon...</value>
+    </data>
+    <data name="Icon.ContextMenu.SaveAsPng" xml:space="preserve">
+        <value>...as PNG</value>
+    </data>
+    <data name="Icon.ContextMenu.SaveAsJpg" xml:space="preserve">
+        <value>...as JPG</value>
+    </data>
+    <data name="Icon.ContextMenu.SaveAsBmp" xml:space="preserve">
+        <value>...as BMP</value>
+    </data>
+    <data name="Icon.ContextMenu.SaveAsGif" xml:space="preserve">
+        <value>...as GIF</value>
+    </data>
+    <data name="Icon.ContextMenu.SaveAsIco" xml:space="preserve">
+        <value>...as ICO (this resolution only)</value>
+    </data>
+    <data name="Icon.ContextMenu.SaveAsTiff" xml:space="preserve">
+        <value>...as TIFF</value>
+    </data>
+    <data name="Icon.Info.Format" xml:space="preserve">
+        <value>Format</value>
+    </data>
+    <data name="Icon.Info.Width" xml:space="preserve">
+        <value>Width</value>
+    </data>
+    <data name="Icon.Info.Height" xml:space="preserve">
+        <value>Height</value>
+    </data>
+    <data name="Icon.Info.Planes" xml:space="preserve">
+        <value>Bit Planes</value>
+    </data>
+    <data name="Icon.Info.NumberOfColors" xml:space="preserve">
+        <value>Number of Colors</value>
+    </data>
+    <data name="Icon.Info.BitsPerPixel" xml:space="preserve">
+        <value>Color Depth</value>
+    </data>
+    <data name="Icon.Info.Size" xml:space="preserve">
+        <value>Size (in bytes)</value>
+    </data>
+    <data name="FileDialog.Ext.dll" xml:space="preserve">
+        <value>Dynamic Link Library</value>
+    </data>
+    <data name="FileDialog.Ext.exe" xml:space="preserve">
+        <value>Executable File</value>
+    </data>
+    <data name="FileDialog.Ext.cpl" xml:space="preserve">
+        <value>Control Panel Item</value>
+    </data>
+    <data name="FileDialog.Ext.all" xml:space="preserve">
+        <value>All Files</value>
+    </data>
+    <data name="FileDialog.Ext.png" xml:space="preserve">
+        <value>Portable Network Graphics</value>
+    </data>
+    <data name="FileDialog.Ext.bmp" xml:space="preserve">
+        <value>Bitmap Image File</value>
+    </data>
+    <data name="FileDialog.Ext.jpg" xml:space="preserve">
+        <value>JPEG Image</value>
+    </data>
+    <data name="FileDialog.Ext.ico" xml:space="preserve">
+        <value>Icon File</value>
+    </data>
+    <data name="FileDialog.Ext.tiff" xml:space="preserve">
+        <value>Tagged Image File Format</value>
+    </data>
+    <data name="FileDialog.Ext.gif" xml:space="preserve">
+        <value>Graphics Interchange Format</value>
+    </data>
+    <data name="Icon.Info.Title" xml:space="preserve">
+        <value>Icon Info</value>
+    </data>
+    <data name="Icon.ContextMenu.CopyToClipboard" xml:space="preserve">
+        <value>Copy to Clipboard (may lose transparency)</value>
+    </data>
+    <data name="Icon.ReSortButton.Tooltip.ImageQuality" xml:space="preserve">
+        <value>Sort by image quality (descending)</value>
+    </data>
+    <data name="Icon.ReSortButton.Tooltip.Id" xml:space="preserve">
+        <value>Sort by ID (ascending)</value>
+    </data>
+    <data name="FileDialog.Ext.webp" xml:space="preserve">
+        <value>WebP Image</value>
+    </data>
+    <data name="Icon.ContextMenu.SaveAsWebP" xml:space="preserve">
+        <value>...as WebP</value>
+    </data>
+    <data name="ErrorMessage.Win32" xml:space="preserve">
+        <value>An Win32 error occurred while loading [{0}].
+{1}: {2}</value>
+    </data>
+    <data name="ErrorMessage.DragNDrop.LocalPath" xml:space="preserve">
+        <value>Failed to retrieve the local path to the file.
+This should never happen.
+        </value>
+    </data>
+    <data name="ErrorMessage.DragNDrop.LnkShortcut" xml:space="preserve">
+        <value>Failed to retrieve the target path from this LNK shortcut.
+Is it a UWP / PWA application?
+        </value>
+    </data>
+</root>

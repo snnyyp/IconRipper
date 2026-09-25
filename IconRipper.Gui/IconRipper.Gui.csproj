@@ -1,0 +1,94 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net10.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <ApplicationIcon>Assets/icon.ico</ApplicationIcon>
+        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <SatelliteResourceLanguages>en;zh-Hans;zh-Hant</SatelliteResourceLanguages>
+        <IsAotCompatible>true</IsAotCompatible>
+        <Version>1.0.0</Version>
+        <FileVersion>1.0.0</FileVersion>
+        <PackageProjectUrl>https://github.com/snnyyp/IconRipper</PackageProjectUrl>
+        <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl>
+        <Authors>snnyyp</Authors>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <DebugType>None</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+        <PublishAot>true</PublishAot>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'$(Configuration)' == 'Release'">
+        <TrimmerRootAssembly Include="IconRipper.Interop"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="12.1.3"/>
+        <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="12.0.0"/>
+        <PackageReference Include="Avalonia.Desktop" Version="12.1.3"/>
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.3"/>
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.3"/>
+        <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3">
+            <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+            <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2"/>
+        <PackageReference Include="MessageBox.Avalonia" Version="12.0.0"/>
+        <PackageReference Include="ResXLocalization.Avalonia" Version="1.1.0"/>
+        <PackageReference Include="Svg.Controls.Skia.Avalonia" Version="12.0.0.17"/>
+        <PackageReference Include="Xaml.Behaviors.Interactions.DragAndDrop" Version="12.0.7"/>
+        <PackageReference Include="Xaml.Behaviors.Interactivity" Version="12.0.7"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\IconRipper.Interop\IconRipper.Interop.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Update="Localization\AboutDialog.zh-Hans.resx">
+            <DependentUpon>AboutDialog.resx</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Localization\AboutDialog.zh-Hant.resx">
+            <DependentUpon>AboutDialog.resx</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Localization\MainWindow.zh-Hans.resx">
+            <DependentUpon>MainWindow.resx</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Localization\MainWindow.zh-Hant.resx">
+            <DependentUpon>MainWindow.resx</DependentUpon>
+        </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Localization\MainWindow.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>MainWindow.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Localization\AboutDialog.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>AboutDialog.resx</DependentUpon>
+        </Compile>
+        <Compile Update="CustomControls\RadioToggleButton.axaml.cs">
+            <DependentUpon>RadioToggleButton.axaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="CustomControls\RadioToggleButton.axaml.cs">
+            <DependentUpon>RadioToggleButton.axaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="CustomControls\IconInfoRow.axaml.cs">
+            <DependentUpon>IconInfoRow.axaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
+    </ItemGroup>
+</Project>

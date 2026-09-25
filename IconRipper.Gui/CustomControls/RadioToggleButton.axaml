@@ -1,0 +1,18 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:IconRipper.Gui.CustomControls">
+
+    <Design.PreviewWith>
+        <controls:RadioToggleButton />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|RadioToggleButton">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ToggleButton IsChecked="{TemplateBinding IsChecked, Mode=TwoWay}"
+                              Content="{TemplateBinding Content, Mode=TwoWay}" />
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+</Styles>
