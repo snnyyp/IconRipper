@@ -9,13 +9,14 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using IconRipper.Gui.Message;
 using IconRipper.Gui.Models;
 using IconRipper.Gui.Views;
 using IconRipper.Interop;
@@ -28,9 +29,6 @@ namespace IconRipper.Gui.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    private static Window MainWindow =>
-        ((IClassicDesktopStyleApplicationLifetime)Application.Current!.ApplicationLifetime!).MainWindow!;
-
     public string[] PresetDlls { get; } =
     [
         "shell32.dll",
@@ -120,15 +118,17 @@ public partial class MainWindowViewModel : ViewModelBase
 
     private async Task AboutCommand_OnExecute()
     {
+        var mainWindowView = WeakReferenceMessenger.Default.Send<RequestMainWindowViewMessage>().Response;
+
         if (!User32.IsKeyDownNow(User32.VirtualKeyCodes.VK_CONTROL))
         {
-            await new AboutDialog().ShowDialog(MainWindow);
+            await new AboutDialog().ShowDialog(mainWindowView);
 
             return;
         }
 
         var dialog = new StressTestDialog();
-        var count = await dialog.ShowDialog<int?>(MainWindow);
+        var count = await dialog.ShowDialog<int?>(mainWindowView);
 
         if (!count.HasValue)
             return;
@@ -262,7 +262,8 @@ public partial class MainWindowViewModel : ViewModelBase
             },
         ]);
 
-        var storageFile = await MainWindow.StorageProvider.SaveFilePickerAsync(
+        var mainWindowView = WeakReferenceMessenger.Default.Send<RequestMainWindowViewMessage>().Response;
+        var storageFile = await mainWindowView.StorageProvider.SaveFilePickerAsync(
             new FilePickerSaveOptions
             {
                 FileTypeChoices = fileExtensions,
@@ -356,7 +357,8 @@ public partial class MainWindowViewModel : ViewModelBase
         if (format != "ico")
             return;
 
-        var storageFile = await MainWindow.StorageProvider.SaveFilePickerAsync(
+        var mainWindowView = WeakReferenceMessenger.Default.Send<RequestMainWindowViewMessage>().Response;
+        var storageFile = await mainWindowView.StorageProvider.SaveFilePickerAsync(
             new FilePickerSaveOptions
             {
                 FileTypeChoices =
@@ -389,7 +391,8 @@ public partial class MainWindowViewModel : ViewModelBase
 
     private async Task LoadCommand_OnExecute()
     {
-        var fileList = await MainWindow.StorageProvider.OpenFilePickerAsync(
+        var mainWindowView = WeakReferenceMessenger.Default.Send<RequestMainWindowViewMessage>().Response;
+        var fileList = await mainWindowView.StorageProvider.OpenFilePickerAsync(
             new FilePickerOpenOptions
             {
                 FileTypeFilter =
@@ -439,6 +442,8 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         Unload();
 
+        var mainWindowView = WeakReferenceMessenger.Default.Send<RequestMainWindowViewMessage>().Response;
+
         try
         {
             Module = new ManagedModule(
@@ -454,7 +459,7 @@ public partial class MainWindowViewModel : ViewModelBase
                     string.Format(Localizer.Current["ErrorMessage.Win32"],
                         peFilePath, e.NativeErrorCode, e.Message),
                     icon: MsBox.Avalonia.Enums.Icon.Error)
-                .ShowWindowDialogAsync(MainWindow);
+                .ShowWindowDialogAsync(mainWindowView);
 
             return;
         }
@@ -470,7 +475,7 @@ public partial class MainWindowViewModel : ViewModelBase
                     "IconRipper",
                     string.Format(Localizer.Current["ErrorMessage.Win32"], e.NativeErrorCode, e.Message),
                     icon: MsBox.Avalonia.Enums.Icon.Error)
-                .ShowWindowDialogAsync(MainWindow);
+                .ShowWindowDialogAsync(mainWindowView);
 
             Unload();
         }
@@ -513,13 +518,15 @@ public partial class MainWindowViewModel
         if (file is not IStorageFile storageFile)
             throw new UnreachableException();
 
+        var mainWindowView = WeakReferenceMessenger.Default.Send<RequestMainWindowViewMessage>().Response;
+
         if (storageFile.TryGetLocalPath() is not { } filePath)
         {
             await MessageBoxManager.GetMessageBoxStandard(
                     "IconRipper",
                     Localizer.Current["ErrorMessage.DragNDrop.LocalPath"],
                     icon: MsBox.Avalonia.Enums.Icon.Error)
-                .ShowWindowDialogAsync(MainWindow);
+                .ShowWindowDialogAsync(mainWindowView);
 
             return;
         }
@@ -539,7 +546,7 @@ public partial class MainWindowViewModel
                             "IconRipper",
                             Localizer.Current["ErrorMessage.DragNDrop.LnkShortcut"],
                             icon: MsBox.Avalonia.Enums.Icon.Error)
-                        .ShowWindowDialogAsync(MainWindow);
+                        .ShowWindowDialogAsync(mainWindowView);
 
                     return;
                 }

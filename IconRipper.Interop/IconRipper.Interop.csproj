@@ -6,8 +6,8 @@
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <Version>1.0.0</Version>
-        <AssemblyVersion></AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
+        <IsAotCompatible>true</IsAotCompatible>
         <PackageProjectUrl>https://github.com/snnyyp/IconRipper</PackageProjectUrl>
         <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl>
         <Authors>snnyyp</Authors>
